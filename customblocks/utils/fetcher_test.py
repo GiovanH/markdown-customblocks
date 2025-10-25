@@ -84,13 +84,10 @@ class Fetcher_Test(unittest.TestCase):
           Server: cloudflAre
           Referrer-Policy: no-referrer, strict-origin-when-cross-origin
           Age: '{Age}'
-          CF-Cache-Status: {CF-Cache-Status}
           CF-RAY: {CF-RAY}
-          #Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-          NEL: '{{"success_fraction":0,"report_to":"cf-nel","max_age":604800}}'
           Report-To: '{Report-To}'
           Server: cloudflare
-          Vary: Accept-Encoding,X-Ezoic-Excludewebp,User-Agent,Origin
+          Vary: accept-encoding
           alt-svc: h3=":443"; ma=86400
           X-Content-Type-Options: nosniff
           X-Download-Options: noopen
