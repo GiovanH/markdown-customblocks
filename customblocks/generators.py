@@ -349,7 +349,6 @@ def map(ctx, location=None, marker=True, *args, **kwds):
         'User-Agent': 'markdown-customblocks',
     })
     if not query.ok:
-        print(dir(query))
         warnings.warn(f"Error {query}")
         return E('.error',
             f'Error geolocating {location}',

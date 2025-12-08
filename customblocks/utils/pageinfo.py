@@ -1,6 +1,6 @@
 from yamlns import namespace as ns
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse, urljoin, urlunsplit
+from urllib.parse import urlparse, urljoin, urlunsplit, quote, unquote
 from decorator import decorator
 
 @decorator
@@ -57,7 +57,11 @@ class PageInfo:
 
     @property
     def siteurl(self):
-        return urlunsplit((self._url.scheme, self._url.netloc,'','','')) or None
+        return urlunsplit((
+            self._url.scheme,
+            self._url.netloc,
+            '', '', ''
+        )) or None
 
     @property
     @cached
@@ -85,13 +89,26 @@ class PageInfo:
         #description = self._soup.find(class_='shortdescription')
         #if description: return description
 
-        baseurl, lemma = self._rel('canonical').split('/wiki/')
-        excerpt_url = baseurl+ '/w/api.php?' + (
-            f'format=json&action=query&prop=extracts&exsentences=2&exintro&titles={lemma}'
-        )
+        canonical = self._rel('canonical')
+        if not canonical:
+            return
+        baseurl, lemma = canonical.split('/wiki/')
+        lemma = unquote(lemma)
+        excerpt_url = baseurl + '/w/api.php'
         from . import Fetcher
         fetcher = Fetcher('fetchercache/wikipedia') # TODO: Configurable
-        content = ns.deep(fetcher.get(excerpt_url).json())
+        content = ns.deep(fetcher.get(
+            excerpt_url,
+            params=dict(
+                format='json',
+                action='query',
+                titles=lemma,
+                prop='extracts',
+                exsentences='2',
+                exintro=True,
+                explaintext=True,
+            )
+        ).json())
         for page in content.query.pages.values():
             if 'extract' in page:
                 return page.extract

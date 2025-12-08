@@ -10,13 +10,16 @@ class Fetcher:
         if not self.cachedir.exists():
             self.cachedir.mkdir(parents=True)
 
-    def _url2path(self, url):
-        return self.cachedir / (
-            url
-                .replace('://','_')
-                .replace('//','_')
-                .replace('/','_')
-            )
+    def _url2path(self, url, params={}):
+        parameters='_'.join(
+            f'_{k}_{v}'
+            for k,v in sorted(params.items())
+        )
+        return self.cachedir / ((url+parameters)
+            .replace('://','_')
+            .replace('//','_')
+            .replace('/','_')
+        )
 
     def clear(self):
         for item in self.cachedir.glob('*'):
@@ -59,14 +62,16 @@ class Fetcher:
             result._content = namespace.content
         return result
 
-    def get(self, url):
-        cachefile = self._url2path(url)
+    def get(self, url, **kwds):
+        cachefile = self._url2path(url, **kwds)
         if cachefile.exists():
             info = ns.load(str(cachefile))
             return self._namespace2response(info)
-        response = requests.get(url)
+        response = requests.get(url,
+            headers={'User-Agent': 'Mozilla 2.0'},
+            **kwds)
         if response.ok:
-            self._response2namespace(response).dump(self._url2path(url))
+            self._response2namespace(response).dump(cachefile)
         return response
 
     def remove(self, url):

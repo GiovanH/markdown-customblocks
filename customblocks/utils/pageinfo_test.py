@@ -181,9 +181,11 @@ class PageInfo_Test(unittest.TestCase):
         ))
         self.assertEqual(info.description,
             # TODO: Fragile on wiki content changes, mockup api
-            "<p><b>Sant Joan Despí</b> és un municipi dins de la comarca del Baix Llobregat, "
-            "situat al pla del Llobregat, a l'esquerra del riu. El municipi confronta amb els de "
-            "Sant Feliu de Llobregat, Sant Just Desvern, Esplugues de Llobregat, Cornellà de Llobregat, Sant Boi i Santa Coloma de Cervelló.</p>"
+            "Sant Joan Despí és un municipi dins de la comarca del Baix Llobregat, "
+            "situat al pla del Llobregat, a l'esquerra del riu. "
+            "El municipi confronta amb els de Sant Feliu de Llobregat, Sant Just Desvern, "
+            "Esplugues de Llobregat, Cornellà de Llobregat, Sant Boi de Llobregat i "
+            "Santa Coloma de Cervelló."
         )
 
     def test_description_fromMediawiki_badArticle(self):

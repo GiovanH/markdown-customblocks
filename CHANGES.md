@@ -1,5 +1,12 @@
 # Release history
 
+## Unreleased
+
+- ✨ `wikipedia`: Using non-deprecated api entrypoint
+- 💥 `wikipedia`: Using plain text description
+- 🐛 `wikipedia`: Fix: urlencoded already urldecoded lemma
+- ✅ Using a different source for dummy images
+
 ## markdown-customblocks 1.5.3 (2022-12-20)
 
 - map: fix: Geocoding failed because now requires user agent
