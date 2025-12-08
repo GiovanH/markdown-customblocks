@@ -1,6 +1,6 @@
 # Release history
 
-## Unreleased
+## markdown-customblocks 1.5.4 (2025-12-08)
 
 - ✨ `wikipedia`: Using non-deprecated api entrypoint
 - 💥 `wikipedia`: Using plain text description
